@@ -1,0 +1,48 @@
+name: Shakuni Deployment Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Deployment target environment (staging / production)'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      dry_run:
+        description: 'Validate build and packaging without deploying'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.target_env || 'staging' }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Backend Container
+      run: |
+        docker build -t shakuni-backend:${{ github.sha }} -f backend/Dockerfile .
+
+    - name: Build Frontend Container
+      run: |
+        docker build -t shakuni-frontend:${{ github.sha }} -f frontend/Dockerfile ./frontend
+
+    - name: Report Deployment Status
+      run: |
+        echo "=== Deployment Pipeline Execution ==="
+        echo "Target Environment: ${{ github.event.inputs.target_env || 'staging' }}"
+        echo "Dry Run Mode: ${{ github.event.inputs.dry_run }}"
+        echo "Images compiled successfully."
+        if [ "${{ github.event.inputs.dry_run }}" = "false" ]; then
+          echo "Notice: Automated push requires cloud credentials (REGISTRY_URL, REGISTRY_USER, REGISTRY_TOKEN)."
+          echo "Please configure repository secrets before live container push."
+        fi

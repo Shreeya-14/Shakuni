@@ -1,0 +1,36 @@
+id,text,category,source_type
+1,The weekly product sync will occur on Thursday at 10 AM to discuss backlog refinement.,Normal / No Significant Manipulation,synthetic/curated research examples
+2,Our data center experienced two minutes of scheduled network maintenance during early morning hours.,Normal / No Significant Manipulation,synthetic/curated research examples
+3,The user guide provides step-by-step instructions for configuring multi-factor authentication.,Normal / No Significant Manipulation,synthetic/curated research examples
+4,The audit team examined forty financial statements and confirmed standard accounting compliance.,Normal / No Significant Manipulation,synthetic/curated research examples
+5,Employees may elect their healthcare benefits during the upcoming open enrollment window in November.,Normal / No Significant Manipulation,synthetic/curated research examples
+6,All the other department leads have signed the loyalty pledge; don't be the single holdout.,Social Pressure,synthetic/curated research examples
+7,Every credible developer in the industry uses this framework; avoiding it shows a lack of expertise.,Social Pressure,synthetic/curated research examples
+8,Nobody wants to be seen as the uncooperative team member who ruined our group bonus eligibility.,Social Pressure,synthetic/curated research examples
+9,The entire office has accepted the overtime policy; you will look bad if you leave at five.,Social Pressure,synthetic/curated research examples
+10,"All senior researchers agree with this consensus hypothesis, so questioning it will isolate your lab.",Social Pressure,synthetic/curated research examples
+11,"If you truly cared about our team's survival, you wouldn't hesitate to give up your weekend.",Emotional Pressure,synthetic/curated research examples
+12,"I put my entire career on the line for you, and your refusal to help is breaking my heart.",Emotional Pressure,synthetic/curated research examples
+13,Think of the unbearable guilt you will feel when innocent people suffer because of your delay.,Emotional Pressure,synthetic/curated research examples
+14,"If you walk away now, you are betraying everyone who sacrificed their personal lives for you.",Emotional Pressure,synthetic/curated research examples
+15,My health is failing due to the agonizing stress this dispute is causing; please just yield.,Emotional Pressure,synthetic/curated research examples
+16,"You are either with our bold transformation strategy, or you are an active enemy of innovation.",Misleading Framing,synthetic/curated research examples
+17,This is not an invasive workplace surveillance system; it is an employee wellness enhancement tool.,Misleading Framing,synthetic/curated research examples
+18,"We can either deregulate our financial operations immediately, or suffer catastrophic market insolvency.",Misleading Framing,synthetic/curated research examples
+19,Anyone criticizing our pricing model simply opposes free enterprise and economic progress.,Misleading Framing,synthetic/curated research examples
+20,This is not a massive layoff; it is an agile rightsizing recalibration for sustainable growth.,Misleading Framing,synthetic/curated research examples
+21,Our test vehicle achieved five hundred miles on a single charge during flat downhill highway trials.,Selective Information,synthetic/curated research examples
+22,Ninety-nine percent of surveyed users in our private beta reported total satisfaction with the app.,Selective Information,synthetic/curated research examples
+23,Our investment strategy generated forty percent profits during the single strongest bull market quarter.,Selective Information,synthetic/curated research examples
+24,Every customer highlighted in our video testimonial experienced immediate revenue doubling.,Selective Information,synthetic/curated research examples
+25,The laboratory recorded zero adverse events among the small select cohort that completed all injections.,Selective Information,synthetic/curated research examples
+26,Your trial subscription is completely free for thirty days; activate your instant account today.,Information Withholding,synthetic/curated research examples
+27,Enjoy an incredible nine percent interest rate on your savings balance with our premier account.,Information Withholding,synthetic/curated research examples
+28,The new company wellness plan maintains your exact premium contribution rate for the upcoming year.,Information Withholding,synthetic/curated research examples
+29,Receive a complimentary luxury gift bag simply for attending our thirty-minute timeshare overview.,Information Withholding,synthetic/curated research examples
+30,The lease offers fixed low monthly payments and roadside assistance across the metropolitan zone.,Information Withholding,synthetic/curated research examples
+31,The CEO personally instructed me to bypass compliance procedures and execute this wire transfer right now.,Deceptive Persuasion,synthetic/curated research examples
+32,Our proprietary quantum trading system guarantees one hundred percent risk-free returns every month.,Deceptive Persuasion,synthetic/curated research examples
+33,I am the federal fraud examiner handling your case; wire the overdue tax assessment immediately.,Deceptive Persuasion,synthetic/curated research examples
+34,Internal auditors secretly verified that no financial irregularities exist anywhere in our books.,Deceptive Persuasion,synthetic/curated research examples
+35,Our clinical formula has cured every terminal cancer patient in classified European medical trials.,Deceptive Persuasion,synthetic/curated research examples
