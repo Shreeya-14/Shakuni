@@ -55,14 +55,26 @@ flowchart TD
 ## Detailed Component Breakdown
 
 ### 1. Frontend Layer (`frontend/`)
-- **Framework**: React 18, Vite build tool.
-- **Styling**: Native CSS modern dark theme with CSS custom properties (`var(--...)`), responsive layout grids, and accessible color contrasts.
-- **Components**:
-  - `AnalyzerForm.jsx`: Text input area, character counter, preset research test examples, submission state handling.
-  - `ResultCard.jsx`: Multi-panel display orchestrating the category badge, probability horizontal bars, and explanation.
-  - `RiskIndicator.jsx`: Animated SVG circular gauge mapping composite scores (0–100) into Low, Moderate, or High tiers.
-  - `CategoryBadge.jsx`: Dynamic visual badge reflecting category iconography and color coding.
-  - `LoadingState.jsx`: Rotating status indicators demonstrating pipeline execution steps.
+- **Framework**: React 18, React Router v6, Vite build tool.
+- **Styling & Aesthetics**: Light editorial research design system with CSS custom properties (`var(--...)`), editorial serif headings (`Playfair Display`), clean geometric UI sans (`Plus Jakarta Sans`), monospace data accents (`JetBrains Mono`), and a warm ivory, deep charcoal, deep burgundy, and antique gold palette.
+- **Pages**:
+  - `Home.jsx` (`/`): Editorial asymmetric landing experience with pattern spotlights, live mini-evaluator, system metrics, and mission statement.
+  - `Analyze.jsx` (`/analyze`): Interactive analysis workbench with live input, preset scenario pills, real-time indicator detection, session history, and structured audit reports.
+  - `Patterns.jsx` (`/patterns`): Complete 7-category tactical taxonomy breakdown with game-theoretic explanations, linguistic markers, detection criteria, and representative citations.
+  - `Research.jsx` (`/research`): Theoretical foundations exploring asymmetric information theory, rhetorical coercion, bounded rationality, and referenced academic literature.
+  - `Model.jsx` (`/model`, `/methodology`): Transparent AI methodology detailing sublinear TF-IDF extraction, multinomial logistic calibration, composite risk formulation, and empirical confusion matrix benchmarks.
+  - `About.jsx` (`/about`): Academic monograph outlining project origins, ethical guidelines, architecture overview, and research boundaries.
+  - `NotFound.jsx` (`*`): Editorial 404 page for handling unmapped routes.
+- **Core Components**:
+  - `AnalyzerForm.jsx`: Text input workbench, character and word counters, scenario preset selector, and analysis submission handling.
+  - `ResultCard.jsx`: Multi-panel intelligence brief presenting primary classification, confidence rating, composite risk spectrum, linguistic evidence chips, posterior probability distribution, and contextual narrative explanations.
+  - `RiskIndicator.jsx`: Linear segmented threat spectrum meter mapping composite scores (0–100) into Low, Moderate, or High risk tiers with needle position and descriptive severity.
+  - `CategoryBadge.jsx`: Dynamic visual badge reflecting category iconography and palette-harmonized color coding.
+  - `AnalysisHistory.jsx`: Collapsible session drawer for reviewing previous evaluations during the current session.
+  - `EmptyWorkspace.jsx`: Editorial placeholder state presenting sample prompts and usage guidance when no text has been submitted.
+  - `LoadingState.jsx`: Multi-stage animated execution progress indicating tokenization, vectorization, classification, and indicator matching steps.
+  - `Navbar.jsx`: Global header featuring strategic dice logo, route navigation links, and live backend connectivity status pill.
+  - `Footer.jsx`: Academic footer with ethical disclaimers, framework navigation, and institutional attribution.
 
 ### 2. Backend API Layer (`backend/app/`)
 - **Framework**: FastAPI with asynchronous route handlers.

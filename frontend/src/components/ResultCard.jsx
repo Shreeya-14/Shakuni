@@ -1,12 +1,13 @@
 import React from 'react';
 import CategoryBadge from './CategoryBadge';
 import RiskIndicator from './RiskIndicator';
-import { Tag, BarChart3, ShieldAlert, Compass, CheckCircle2 } from 'lucide-react';
+import { Tag, BarChart3, ShieldAlert, Compass, Gauge, CheckCircle2, FileText, CornerDownRight } from 'lucide-react';
 
 export default function ResultCard({ result }) {
   if (!result) return null;
 
   const {
+    text,
     category,
     risk_score,
     risk_level,
@@ -24,108 +25,120 @@ export default function ResultCard({ result }) {
   );
 
   return (
-    <div className="report-dossier">
-      <div className="dossier-card">
+    <div className="analysis-report-container" role="region" aria-label="Analysis Results Dossier">
+      <div className="report-document">
         {/* Top Report Metadata Strip */}
-        <div className="report-meta-strip">
-          <div>DOSSIER REPORT // CLASSIFICATION BRIEF</div>
-          <div>STATUS: ANALYSIS COMPLETE &bull; MODEL: TF-IDF + LOGISTIC REGRESSION</div>
+        <div className="report-top-strip">
+          <div>
+            <span style={{ color: 'var(--brand-burgundy)', fontWeight: 700 }}>DOSSIER // </span>
+            CLASSIFICATION BRIEF
+          </div>
+          <div>
+            TF-IDF + LOGISTIC REGRESSION &bull; CALIBRATED SOFTMAX
+          </div>
         </div>
 
-        {/* Lead Grid: Category + Confidence + Precision Radial Risk Gauge */}
-        <div className="report-lead-grid">
-          <div>
-            <div className="pattern-eyebrow">DETECTED RHETORICAL PATTERN</div>
-            <div className="pattern-title">{category}</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-              <CategoryBadge category={category} />
-              
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.45rem' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Model Confidence:
-                </span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.35rem', fontWeight: '700', color: 'var(--accent-gold-light)' }}>
-                  {confidencePct}%
-                </span>
-              </div>
+        {/* Lead Category Banner */}
+        <div className="report-lead-section">
+          <div className="report-category-eyebrow">DETECTED COMMUNICATION PATTERN</div>
+          <h2 className="report-category-heading">{category}</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+            <CategoryBadge category={category} />
+            {text && (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                Sample length: {text.length.toLocaleString()} chars
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Two-Column Key Metrics: Composite Risk Index & Model Confidence */}
+        <div className="report-metrics-grid">
+          <div className="metric-card-block">
+            <div className="metric-card-title">
+              <Gauge size={13} color="var(--brand-burgundy)" />
+              <span>Composite Threat & Risk Profile</span>
             </div>
+            <RiskIndicator score={risk_score} level={risk_level} />
           </div>
 
-          {/* Right Column: Radial Risk Gauge */}
-          <RiskIndicator score={risk_score} level={risk_level} />
+          <div className="metric-card-block">
+            <div className="metric-card-title">
+              <CheckCircle2 size={13} color="var(--brand-burgundy)" />
+              <span>Model Classification Confidence</span>
+            </div>
+            <div className="confidence-display-row">
+              <span className="confidence-big-pct">{confidencePct}%</span>
+            </div>
+            <p className="confidence-description">
+              Estimated posterior probability mass assigned to the primary category under multinomial logistic softmax over 4,595 lexical features.
+            </p>
+          </div>
         </div>
 
-        {/* Dossier Body Content */}
-        <div className="dossier-body">
-          {/* Editorial Analysis Explanation */}
+        {/* Body Content: Explanation, Indicators, Probability Distribution */}
+        <div className="report-content-body">
+          {/* Qualitative Rationale */}
           <div>
-            <div className="dossier-section-title">
-              <Compass size={14} color="var(--accent-gold)" />
+            <div className="section-label-bar">
+              <Compass size={13} />
               <span>Contextual Pattern Analysis & Qualitative Rationale</span>
             </div>
-            <div className="editorial-explanation">
+            <div className="editorial-explanation-box">
               {explanation}
             </div>
           </div>
 
           {/* Potential Linguistic Indicators */}
           <div>
-            <div className="dossier-section-title">
-              <Tag size={14} color="var(--accent-gold)" />
-              <span>Potential Rhetorical Indicators Detected ({indicators.length})</span>
+            <div className="section-label-bar">
+              <Tag size={13} />
+              <span>Potential Rhetorical Indicators Isolated ({indicators.length})</span>
             </div>
 
             {indicators.length > 0 ? (
-              <div className="indicator-tag-grid">
+              <div className="indicator-tags-list">
                 {indicators.map((ind, idx) => (
-                  <div key={idx} className="indicator-dossier-tag" title={ind.description}>
-                    <strong>{ind.name}</strong>
+                  <div key={idx} className="editorial-indicator-tag" title={ind.description}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                      <CornerDownRight size={11} color="var(--brand-burgundy)" />
+                      <strong>{ind.name}</strong>
+                    </div>
                     <span>"{ind.matched_phrase}"</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="no-indicators-note">
-                No overt lexical coercion, urgent panic, or deceptive framing markers isolated. Pattern classification established primarily via continuous n-gram distribution.
-              </div>
+              <p className="no-indicators-text">
+                No overt lexical coercion, urgent panic, or deceptive framing markers isolated. Pattern classification established primarily via continuous n-gram feature distribution.
+              </p>
             )}
           </div>
 
-          {/* Category Probability Distribution */}
+          {/* Probability Distribution */}
           {sortedProbabilities.length > 0 && (
             <div>
-              <div className="dossier-section-title">
-                <BarChart3 size={14} color="var(--accent-gold)" />
+              <div className="section-label-bar">
+                <BarChart3 size={13} />
                 <span>Posterior Probability Distribution Across Taxonomy</span>
               </div>
 
-              <div className="probabilities-matrix">
+              <div className="probability-bars-table">
                 {sortedProbabilities.map(([catName, prob]) => {
                   const pct = Math.round(prob * 100);
                   const isTop = catName === category;
                   return (
-                    <div key={catName} className="prob-metric-row">
-                      <span 
-                        className="prob-metric-name" 
-                        style={{ 
-                          color: isTop ? 'var(--text-primary)' : 'var(--text-muted)',
-                          fontWeight: isTop ? '600' : '400'
-                        }}
-                      >
+                    <div key={catName} className="prob-row-light">
+                      <span className={`prob-name-light ${isTop ? 'highlight' : ''}`}>
                         {catName}
                       </span>
-                      <div className="prob-track">
+                      <div className="prob-track-light">
                         <div 
-                          className="prob-fill" 
-                          style={{ 
-                            width: `${pct}%`,
-                            background: isTop 
-                              ? 'linear-gradient(90deg, var(--accent-wine), var(--accent-gold))' 
-                              : 'rgba(197, 160, 89, 0.2)'
-                          }} 
+                          className={`prob-fill-light ${isTop ? 'top' : ''}`}
+                          style={{ width: `${Math.max(2, pct)}%` }}
                         />
                       </div>
-                      <span className="prob-pct-number" style={{ color: isTop ? 'var(--accent-gold-light)' : 'var(--text-muted)' }}>
+                      <span className="prob-pct-light">
                         {pct}%
                       </span>
                     </div>
@@ -136,10 +149,10 @@ export default function ResultCard({ result }) {
           )}
         </div>
 
-        {/* Ethical / Methodological Caveat Strip */}
-        <div className="dossier-caveat">
-          <ShieldAlert size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '2px' }} />
-          <div className="dossier-caveat-text">
+        {/* Ethical / Methodological Limitation Strip */}
+        <div className="report-caveat-strip">
+          <ShieldAlert size={18} style={{ color: 'var(--brand-burgundy)', flexShrink: 0, marginTop: '2px' }} />
+          <div>
             <strong>Research Prototype Notice:</strong> This analysis identifies statistical communication patterns using natural language processing. It does not determine whether a person is lying or whether an author's subjective intentions are deceptive. Predictions are probabilistic and intended exclusively for academic research, communication auditing, and media literacy analysis.
           </div>
         </div>
@@ -147,3 +160,5 @@ export default function ResultCard({ result }) {
     </div>
   );
 }
+
+export { ResultCard as ResultDossier };

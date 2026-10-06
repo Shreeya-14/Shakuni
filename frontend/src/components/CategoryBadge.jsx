@@ -65,10 +65,10 @@ export default function CategoryBadge({ category }) {
   const Icon = meta.icon;
 
   return (
-    <div className={`category-identity-badge ${meta.className}`}>
-      <span style={{ opacity: 0.75, letterSpacing: '0.05em' }}>{meta.code} //</span>
-      <Icon size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />
+    <span className={`category-badge-chip ${meta.className}`}>
+      <span style={{ opacity: 0.85, letterSpacing: '0.06em' }}>{meta.code}</span>
+      <Icon size={13} style={{ display: 'inline', verticalAlign: 'middle', flexShrink: 0 }} />
       <span>{category}</span>
-    </div>
+    </span>
   );
 }

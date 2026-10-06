@@ -48,8 +48,8 @@ frontend/.env.development.local
 # Environment
 .env
 
-# Model artifacts (optional to ignore raw weights or keep baseline)
-ai_engine/models/*.joblib
+# Model artifacts (include lightweight pre-trained baseline binaries for deployment)
+!ai_engine/models/*.joblib
 !ai_engine/models/.gitkeep
 
 # Logs

@@ -1,6 +1,6 @@
 # Shakuni Model Evaluation Report
 
-**Generated:** 2026-10-03 03:52:06 UTC  
+**Generated:** 2026-10-06 05:58:46 UTC  
 **Evaluation Dataset:** `evaluation/test_cases/evaluation_cases.csv`  
 **Dataset Type:** synthetic/curated research examples (held-out test set)  
 **Total Evaluation Samples:** 35  

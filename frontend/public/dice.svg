@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
-  <!-- Antique Gold Strategic Isometric Die -->
-  <polygon points="16,2 30,10 16,18 2,10" stroke="#c5a059" stroke-width="1.5" stroke-linejoin="round" fill="rgba(197, 160, 89, 0.06)"/>
-  <polygon points="2,10 16,18 16,30 2,22" stroke="#c5a059" stroke-width="1.5" stroke-linejoin="round" fill="rgba(139, 30, 63, 0.08)"/>
-  <polygon points="30,10 16,18 16,30 30,22" stroke="#c5a059" stroke-width="1.5" stroke-linejoin="round" fill="rgba(197, 160, 89, 0.03)"/>
-  <!-- Tactical Pips / Core Coordinate Points -->
-  <circle cx="16" cy="10" r="1.5" fill="#f5f2eb"/>
-  <circle cx="9" cy="19.5" r="1.2" fill="#c5a059"/>
-  <circle cx="23" cy="19.5" r="1.2" fill="#c5a059"/>
-  <circle cx="16" cy="24" r="1.2" fill="#8b1e3f"/>
+  <!-- Refined Editorial Strategic Die for Light Theme -->
+  <polygon points="16,2 30,10 16,18 2,10" stroke="#7a1c30" stroke-width="1.5" stroke-linejoin="round" fill="#faf6f0"/>
+  <polygon points="2,10 16,18 16,30 2,22" stroke="#7a1c30" stroke-width="1.5" stroke-linejoin="round" fill="#f2ebe0"/>
+  <polygon points="30,10 16,18 16,30 30,22" stroke="#7a1c30" stroke-width="1.5" stroke-linejoin="round" fill="#e8ded0"/>
+  <!-- Strategic Dice Pips in Burgundy and Brass -->
+  <circle cx="16" cy="10" r="1.5" fill="#7a1c30"/>
+  <circle cx="9" cy="19.5" r="1.2" fill="#b89047"/>
+  <circle cx="23" cy="19.5" r="1.2" fill="#b89047"/>
+  <circle cx="16" cy="24" r="1.2" fill="#7a1c30"/>
 </svg>

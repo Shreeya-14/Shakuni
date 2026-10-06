@@ -1,70 +1,46 @@
 import React from 'react';
 
 export default function RiskIndicator({ score = 0, level = 'Low' }) {
-  const normalizedScore = Math.max(0, Math.min(100, score));
-  const radius = 58;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (normalizedScore / 100) * circumference;
-
-  let strokeColor = '#78907a'; // Low / Sage
-  let tierClass = 'low';
-
-  if (level === 'Moderate') {
-    strokeColor = '#c48037'; // Amber
-    tierClass = 'moderate';
-  } else if (level === 'High') {
-    strokeColor = '#a62639'; // Deep Crimson / Wine
-    tierClass = 'high';
-  }
+  const normalizedScore = Math.max(0, Math.min(100, Math.round(score)));
+  
+  const tierClass = level.toLowerCase() === 'high' 
+    ? 'high' 
+    : level.toLowerCase() === 'moderate' 
+      ? 'moderate' 
+      : 'low';
 
   return (
-    <div className="precision-risk-panel">
-      <div className="radial-gauge-container">
-        <svg className="gauge-svg-precision" viewBox="0 0 144 144">
-          {/* Faint Concentric Alignment Ring */}
-          <circle
-            cx="72"
-            cy="72"
-            r="66"
-            fill="none"
-            stroke="rgba(197, 160, 89, 0.08)"
-            strokeWidth="1"
-            strokeDasharray="2 4"
-          />
-          {/* Background Track */}
-          <circle
-            className="gauge-track"
-            cx="72"
-            cy="72"
-            r={radius}
-          />
-          {/* Active Precision Arc */}
-          <circle
-            className="gauge-stroke-fill"
-            cx="72"
-            cy="72"
-            r={radius}
-            stroke={strokeColor}
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-          />
-        </svg>
-
-        <div className="gauge-inner-content">
-          <span className="gauge-main-score" style={{ color: strokeColor }}>
-            {normalizedScore}
-          </span>
-          <span className="gauge-denominator">SCALE / 100</span>
-        </div>
+    <div className="risk-meter-container">
+      <div className="risk-score-display">
+        <span className="risk-score-number">{normalizedScore}</span>
+        <span className="risk-score-denom">/ 100</span>
+        <span className={`risk-tier-badge ${tierClass}`}>
+          {level} Risk
+        </span>
       </div>
 
-      <div className={`risk-tier-tag ${tierClass}`}>
-        {level} Manipulation Risk
+      <div 
+        className="risk-spectrum-bar" 
+        role="progressbar" 
+        aria-valuenow={normalizedScore} 
+        aria-valuemin={0} 
+        aria-valuemax={100}
+        aria-label={`Calculated risk score: ${normalizedScore} out of 100 (${level} Risk)`}
+      >
+        <div className="spectrum-segment low" title="Low: 0–39" />
+        <div className="spectrum-segment moderate" title="Moderate: 40–69" />
+        <div className="spectrum-segment high" title="High: 70–100" />
+        <div 
+          className="spectrum-indicator-pin" 
+          style={{ left: `calc(${normalizedScore}% - 2px)` }} 
+        />
       </div>
 
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-        Rhetorical Threat Intensity
-      </p>
+      <div className="spectrum-labels">
+        <span>0 LOW (0–39)</span>
+        <span>40 MODERATE (40–69)</span>
+        <span>70 HIGH (70–100)</span>
+      </div>
     </div>
   );
 }

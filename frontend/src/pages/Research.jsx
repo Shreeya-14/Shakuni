@@ -1,55 +1,81 @@
 import React from 'react';
-import { Target, BookOpen, GitCompare, Network, Scale, ShieldAlert, Award } from 'lucide-react';
+import { 
+  Target, 
+  BookOpen, 
+  GitCompare, 
+  Network, 
+  Scale, 
+  Award, 
+  ShieldAlert, 
+  Cpu, 
+  AlertTriangle,
+  Compass,
+  Layers
+} from 'lucide-react';
 
 export default function Research() {
   return (
-    <div className="editorial-page">
-      {/* Editorial Header */}
-      <header className="editorial-header">
-        <span className="editorial-doc-code">RESEARCH BRIEF // MONOGRAPH 02</span>
-        <h2 className="editorial-title">Conceptual Foundations & Theoretical Context</h2>
-        <p className="editorial-subtitle">
+    <article className="editorial-monograph" role="article">
+      {/* Header */}
+      <header className="monograph-header">
+        <span className="monograph-ref">RESEARCH SPECIFICATION // MONOGRAPH 02</span>
+        <h1 className="monograph-title">Conceptual Foundations & Theoretical Context</h1>
+        <p className="monograph-abstract">
           Investigating the dynamics of strategic information manipulation, cognitive vulnerability exploitation, and conversational asymmetry through computational discourse analysis.
         </p>
       </header>
 
-      {/* The Problem */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">THE PROBLEM</span>
-        <h3 className="editorial-section-heading">The Hidden Mechanics of Covert Influence</h3>
+      {/* 1. The Problem */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 01 // THE PROBLEM</span>
+        <h2 className="monograph-sec-title">The Hidden Mechanics of Covert Influence</h2>
         <p>
-          Contemporary digital discourse analysis has excelled at catching overt hostility, explicit profanity, and crude disinformation. Yet the most destructive forms of manipulation—coercive workplace pressure, fraudulent investment prospectuses, and emotionally abusive interpersonal communications—operate almost exclusively within the confines of polite, professional, and seemingly reasoned dialogue.
+          Contemporary automated discourse analysis has excelled at catching overt hostility, explicit profanity, and crude disinformation. Yet the most destructive forms of manipulation—coercive workplace pressure, fraudulent investment prospectuses, and emotionally abusive interpersonal communications—operate almost exclusively within the confines of polite, professional, and seemingly reasoned dialogue.
+        </p>
+        <p>
+          Standard sentiment analyzers mark these coercive statements as "neutral" or "positive," while toxic-speech filters fail to fire because no offensive lexemes are present. There exists an acute need for tools that examine the <em>structure of the proposal</em> rather than the emotional tone of the speaker.
         </p>
       </section>
 
-      {/* The Concept: Shakuni Archetype */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">THE CONCEPT</span>
-        <h3 className="editorial-section-heading">
-          <Target size={20} color="var(--accent-gold)" />
-          The Shakuni Archetype: Asymmetric Information Warfare
-        </h3>
+      {/* 2. Conceptual Foundation: Shakuni Archetype & Asymmetry */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 02 // CONCEPTUAL FOUNDATION</span>
+        <h2 className="monograph-sec-title">
+          <Target size={20} color="var(--brand-burgundy)" />
+          The Shakuni Archetype & Game-Theoretic Asymmetry
+        </h2>
         <p>
-          In classical epic traditions (principally the Mahabharata), the figure of <strong>Shakuni</strong> serves as the archetype of strategic deception. Rather than relying on physical martial might, Shakuni orchestrated political outcomes by exploiting cognitive biases: inciting familial pride, manufacturing false choices, and skewing probability through the loaded dice game.
+          In classical epic traditions (principally the Mahabharata), the figure of <strong>Shakuni</strong> serves as the seminal archetype of strategic deception. Rather than relying on physical martial might, Shakuni orchestrated political outcomes by exploiting cognitive biases: inciting familial pride, manufacturing false choices, and skewing probability through the loaded dice game.
         </p>
         <p>
           In contemporary computational terms, the "loaded dice" metaphor directly maps to <strong>information asymmetry</strong>: when one party selectively presents evidence, conceals critical caveats, or manufactures synthetic social pressure, the decision environment is manipulated while preserving the surface illusion of fair consent.
         </p>
+
+        <div className="monograph-briefs-grid">
+          <div className="monograph-brief-box">
+            <h4>Asymmetric Signaling</h4>
+            <p>The speaker holds privileged knowledge of consequences, dependencies, or group consensus that the recipient cannot independently verify in real time.</p>
+          </div>
+          <div className="monograph-brief-box">
+            <h4>Decision-Space Distortion</h4>
+            <p>Rather than asserting falsehoods, the speaker artificially constrains the listener's perceived choices (e.g., framing standard alternatives as existential betrayal).</p>
+          </div>
+        </div>
       </section>
 
-      {/* Existing Approaches & Comparative Matrix */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">EXISTING APPROACHES</span>
-        <h3 className="editorial-section-heading">
-          <GitCompare size={20} color="var(--accent-gold)" />
+      {/* 3. Existing Approaches & Comparative Matrix Table */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 03 // STATE OF THE ART</span>
+        <h2 className="monograph-sec-title">
+          <GitCompare size={20} color="var(--brand-burgundy)" />
           Comparative Analysis of Analytical Paradigms
-        </h3>
+        </h2>
         <p>
           Existing automated discourse tools fail to capture the specific subtleties of strategic manipulation due to misaligned objective functions:
         </p>
 
-        <div className="matrix-table-wrapper">
-          <table className="matrix-table">
+        <div className="research-table-wrapper">
+          <table className="research-table">
             <thead>
               <tr>
                 <th>Analytical Paradigm</th>
@@ -78,7 +104,7 @@ export default function Research() {
                 <td>Conflates coercive urgency with negative sentiment, ignoring positive-toned pressure.</td>
               </tr>
               <tr className="highlight-shakuni">
-                <td style={{ fontWeight: 700, color: 'var(--accent-gold-light)' }}>Shakuni Framework</td>
+                <td style={{ fontWeight: 700, color: 'var(--brand-burgundy)' }}>Shakuni Framework</td>
                 <td>Asymmetric framing, withholding, and rhetorical coercion</td>
                 <td>7-Class Probability + Risk Score (0–100)</td>
                 <td>Context-dependent sarcasm requiring external world knowledge.</td>
@@ -88,13 +114,13 @@ export default function Research() {
         </div>
       </section>
 
-      {/* Research Gap */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">RESEARCH GAP</span>
-        <h3 className="editorial-section-heading">
-          <BookOpen size={20} color="var(--accent-gold)" />
+      {/* 4. Research Gap */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 04 // RESEARCH GAP</span>
+        <h2 className="monograph-sec-title">
+          <BookOpen size={20} color="var(--brand-burgundy)" />
           The Void in Contemporary Discourse NLP
-        </h3>
+        </h2>
         <p>
           While natural language processing has produced thousands of studies on sentiment and profanity, there exists a profound scarcity of computational frameworks dedicated to <strong>persuasive manipulation taxonomy</strong>.
         </p>
@@ -103,57 +129,68 @@ export default function Research() {
         </p>
       </section>
 
-      {/* Our Architectural Approach */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">OUR APPROACH</span>
-        <h3 className="editorial-section-heading">
-          <Network size={20} color="var(--accent-gold)" />
+      {/* 5. System Framework */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 05 // SYSTEM FRAMEWORK</span>
+        <h2 className="monograph-sec-title">
+          <Network size={20} color="var(--brand-burgundy)" />
           Decoupled, Explainable Engineering
-        </h3>
+        </h2>
         <p>
-          Rather than relying on uninterpretable billion-parameter models that hallucinate confidence, Shakuni combines:
+          Rather than relying on uninterpretable multi-billion parameter models that hallucinate confidence, Shakuni combines two auditable layers:
         </p>
-        <div className="brief-grid">
-          <div className="brief-box">
-            <h4>Calibrated Probabilities</h4>
-            <p>Multinomial Logistic Regression delivers mathematically sound class distributions with verifiable coefficient contributions.</p>
+        <div className="monograph-briefs-grid">
+          <div className="monograph-brief-box">
+            <h4>Calibrated Softmax Distribution</h4>
+            <p>Multinomial Logistic Regression delivers mathematically sound class distributions with verifiable coefficient contributions across 4,595 n-grams.</p>
           </div>
-          <div className="brief-box">
+          <div className="monograph-brief-box">
             <h4>Evidence-Grounded Explanations</h4>
-            <p>Every analysis extracts specific linguistic markers that anchor the qualitative rationale in surface text evidence.</p>
+            <p>Every analysis extracts specific linguistic markers that anchor the qualitative rationale in surface text evidence (e.g. false dichotomy anchors, guilt triggers).</p>
           </div>
         </div>
       </section>
 
-      {/* Ethical Considerations & Responsible Use */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">ETHICAL USE & RESPONSIBLE AI</span>
-        <h3 className="editorial-section-heading">
-          <Scale size={20} color="var(--accent-gold)" />
+      {/* 6. Ethical Considerations & Responsible AI */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 06 // ETHICAL GOVERNANCE</span>
+        <h2 className="monograph-sec-title">
+          <Scale size={20} color="var(--brand-burgundy)" />
           Ethical Guardrails & Judicial Restraint
-        </h3>
-        <p>
-          Deploying AI to evaluate human communication involves serious ethical responsibilities:
-        </p>
-        <div className="brief-grid">
-          <div className="brief-box">
+        </h2>
+        <div className="monograph-briefs-grid">
+          <div className="monograph-brief-box">
             <h4>Not a Lie Detector</h4>
             <p>Shakuni analyzes linguistic patterns. It never claims to evaluate whether a speaker is objectively lying or determine subjective moral guilt.</p>
           </div>
-          <div className="brief-box">
+          <div className="monograph-brief-box">
             <h4>Human-in-the-Loop Mandate</h4>
             <p>Model scores must never be utilized as autonomous grounds for disciplinary action, content censorship, or legal sanction without human audit.</p>
           </div>
         </div>
       </section>
 
-      {/* Academic Citations */}
-      <section className="editorial-section">
-        <span className="editorial-section-num">REFERENCES & SCHOLARLY LITERATURE</span>
-        <h3 className="editorial-section-heading">
-          <Award size={20} color="var(--accent-gold)" />
+      {/* 7. Limitations */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">SECTION 07 // LIMITATIONS</span>
+        <h2 className="monograph-sec-title">
+          <AlertTriangle size={20} color="var(--brand-burgundy)" />
+          Methodological Scope & Limitations
+        </h2>
+        <ul style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: '1.9', fontSize: '0.95rem' }}>
+          <li><strong>Curated Benchmark Dataset</strong>: Training relies on 280 peer-reviewed curated research examples; continuous training on open datasets is required for domain transfer.</li>
+          <li><strong>Context Sensitivity</strong>: Irony, inside humor, or affectionate teasing among close colleagues may trigger rhetorical markers without manipulative intent.</li>
+          <li><strong>Domain Nuances</strong>: Legal documents and aggressive advertising use distinct framing conventions that require specialized threshold calibrations.</li>
+        </ul>
+      </section>
+
+      {/* 8. Scholarly Citations */}
+      <section className="monograph-section">
+        <span className="monograph-sec-number">REFERENCES & SCHOLARLY LITERATURE</span>
+        <h2 className="monograph-sec-title">
+          <Award size={20} color="var(--brand-burgundy)" />
           Foundational Bibliography
-        </h3>
+        </h2>
         <ul style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', lineHeight: '1.9', fontSize: '0.9rem' }}>
           <li><strong>Tversky, A., & Kahneman, D. (1981).</strong> The Framing of Decisions and the Psychology of Choice. <em>Science</em>, 211(4481), 453-458.</li>
           <li><strong>Cialdini, R. B. (2001).</strong> <em>Influence: Science and Practice</em> (4th ed.). Allyn & Bacon.</li>
@@ -162,6 +199,6 @@ export default function Research() {
           <li><strong>Festinger, L. (1957).</strong> <em>A Theory of Cognitive Dissonance</em>. Stanford University Press.</li>
         </ul>
       </section>
-    </div>
+    </article>
   );
 }
