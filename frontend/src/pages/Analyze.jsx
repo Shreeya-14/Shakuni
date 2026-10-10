@@ -12,7 +12,12 @@ import {
   FileText, 
   Sparkles,
   ChevronRight,
-  History
+  History,
+  Cpu,
+  Key,
+  Settings,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 const CURATED_SAMPLES = [
@@ -54,6 +59,8 @@ const CURATED_SAMPLES = [
 ];
 
 const STORAGE_KEY = 'shakuni_analysis_history';
+const ENGINE_STORAGE_KEY = 'shakuni_selected_engine';
+const API_KEY_STORAGE_KEY = 'shakuni_llm_api_key';
 
 export default function Analyze() {
   const [inputText, setInputText] = useState('');
@@ -62,6 +69,15 @@ export default function Analyze() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(true);
+
+  // AI Model Engine & LLM Settings
+  const [selectedEngine, setSelectedEngine] = useState(() => {
+    return localStorage.getItem(ENGINE_STORAGE_KEY) || 'hybrid';
+  });
+  const [apiKey, setApiKey] = useState(() => {
+    return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
+  });
+  const [showEngineConfig, setShowEngineConfig] = useState(false);
 
   const location = useLocation();
 
@@ -134,7 +150,10 @@ export default function Analyze() {
     setError(null);
 
     try {
-      const data = await analyzeText(text.trim());
+      const data = await analyzeText(text.trim(), {
+        engine: selectedEngine,
+        apiKey: apiKey ? apiKey.trim() : undefined
+      });
       setAnalysisResult(data);
       saveToHistory(data, text.trim());
     } catch (err) {
@@ -172,7 +191,7 @@ export default function Analyze() {
           <span className="workspace-eyebrow">INTELLIGENCE WORKSPACE</span>
           <h1 className="workspace-page-heading">Communication Pattern Analyzer</h1>
           <p className="workspace-page-lead">
-            Evaluate statements, announcements, dialogues, or proposals against Shakuni's seven-category rhetorical manipulation taxonomy.
+            Evaluate statements, announcements, dialogues, or proposals against Shakuni's seven-category rhetorical manipulation taxonomy and deep linguistic style reasoning.
           </p>
         </div>
       </header>
@@ -196,6 +215,126 @@ export default function Analyze() {
                   {charCount.toLocaleString()} / 10,000 CHARACTERS
                 </div>
               </div>
+
+              {/* AI Reasoning Engine Selector Bar */}
+              <div style={{
+                background: 'var(--bg-warm-tint)',
+                padding: '0.65rem 1rem',
+                borderBottom: '1px solid var(--border-light)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '0.65rem'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <Cpu size={14} color="var(--brand-burgundy)" />
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                    REASONING ENGINE:
+                  </span>
+                  <select
+                    value={selectedEngine}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setSelectedEngine(val);
+                      localStorage.setItem(ENGINE_STORAGE_KEY, val);
+                    }}
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.74rem',
+                      padding: '0.2rem 0.5rem',
+                      background: '#ffffff',
+                      border: '1px solid var(--border-medium)',
+                      borderRadius: '3px',
+                      color: 'var(--text-primary)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value="hybrid">⚡ Shakuni Hybrid (DistilBERT + Neural Discourse Reasoner)</option>
+                    <option value="gemini">✨ Google Gemini 2.0 Flash (Cloud LLM)</option>
+                    <option value="openai">🤖 ChatGPT / OpenAI GPT-4o-mini (Cloud LLM)</option>
+                    <option value="groq">⚡ Groq LLaMA 3.3 70B (Cloud LLM)</option>
+                    <option value="ollama">💻 Local Ollama (llama3)</option>
+                  </select>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowEngineConfig(!showEngineConfig)}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid var(--border-medium)',
+                    borderRadius: '3px',
+                    padding: '0.2rem 0.6rem',
+                    fontSize: '0.7rem',
+                    fontFamily: 'var(--font-mono)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    cursor: 'pointer',
+                    color: 'var(--brand-burgundy)'
+                  }}
+                >
+                  <Key size={12} />
+                  <span>{apiKey ? 'API Key Configured' : 'Configure API Key'}</span>
+                  {showEngineConfig ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                </button>
+              </div>
+
+              {/* Collapsible API Key Drawer */}
+              {showEngineConfig && (
+                <div style={{
+                  background: '#fdfcf7',
+                  borderBottom: '1px solid var(--border-medium)',
+                  padding: '0.85rem 1rem',
+                  fontSize: '0.78rem'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem' }}>
+                    <input
+                      type="password"
+                      value={apiKey}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setApiKey(val);
+                        localStorage.setItem(API_KEY_STORAGE_KEY, val);
+                      }}
+                      placeholder={`Enter your ${selectedEngine === 'gemini' ? 'Gemini' : selectedEngine === 'openai' ? 'OpenAI' : selectedEngine === 'groq' ? 'Groq' : 'LLM'} API Key...`}
+                      style={{
+                        flex: 1,
+                        padding: '0.35rem 0.65rem',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.75rem',
+                        border: '1px solid var(--border-medium)',
+                        borderRadius: '3px',
+                        background: '#ffffff'
+                      }}
+                    />
+                    {apiKey && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setApiKey('');
+                          localStorage.removeItem(API_KEY_STORAGE_KEY);
+                        }}
+                        style={{
+                          background: '#f5f4ef',
+                          border: '1px solid var(--border-medium)',
+                          padding: '0.35rem 0.65rem',
+                          fontSize: '0.7rem',
+                          fontFamily: 'var(--font-mono)',
+                          borderRadius: '3px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Clear Key
+                      </button>
+                    )}
+                  </div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', lineHeight: 1.4 }}>
+                    🔒 API keys are stored only locally in your browser. If left empty, Shakuni uses its built-in neural linguistic discourse reasoner with 0 API keys required.
+                  </div>
+                </div>
+              )}
 
               {/* Textarea Area */}
               <div className="textarea-container">

@@ -1,7 +1,19 @@
 import React from 'react';
 import CategoryBadge from './CategoryBadge';
 import RiskIndicator from './RiskIndicator';
-import { Tag, BarChart3, ShieldAlert, Compass, Gauge, CheckCircle2, FileText, CornerDownRight } from 'lucide-react';
+import { 
+  Tag, 
+  BarChart3, 
+  ShieldAlert, 
+  Compass, 
+  Gauge, 
+  CheckCircle2, 
+  FileText, 
+  CornerDownRight,
+  Sparkles,
+  MessageSquare,
+  ShieldCheck
+} from 'lucide-react';
 
 export default function ResultCard({ result }) {
   if (!result) return null;
@@ -14,7 +26,8 @@ export default function ResultCard({ result }) {
     confidence,
     explanation,
     indicators = [],
-    probabilities = {}
+    probabilities = {},
+    style_analysis = null
   } = result;
 
   const confidencePct = Math.round((confidence || 0) * 100);
@@ -78,6 +91,152 @@ export default function ResultCard({ result }) {
 
         {/* Body Content: Explanation, Indicators, Probability Distribution */}
         <div className="report-content-body">
+          {/* Deep Linguistic & Style Reasoning (ChatGPT / Gemini / Local Engine) */}
+          {style_analysis && (
+            <div className="style-reasoning-dossier" style={{ marginBottom: '1.75rem' }}>
+              <div className="section-label-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                  <Sparkles size={14} color="var(--brand-burgundy)" />
+                  <span style={{ fontWeight: 700, letterSpacing: '0.08em' }}>
+                    DEEP LINGUISTIC & STYLE REASONING (WAY OF SPEAKING & WRITING)
+                  </span>
+                </div>
+                <span style={{ 
+                  fontFamily: 'var(--font-mono)', 
+                  fontSize: '0.68rem', 
+                  color: 'var(--brand-burgundy)',
+                  background: 'var(--brand-burgundy-subtle)',
+                  padding: '0.15rem 0.5rem',
+                  borderRadius: '3px',
+                  fontWeight: 600
+                }}>
+                  {style_analysis.model_provider || 'Neural Reasoning'}
+                </span>
+              </div>
+
+              {/* 4-Pill Profile Bar */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                gap: '0.75rem',
+                margin: '0.85rem 0 1.25rem 0'
+              }}>
+                <div style={{ background: 'var(--bg-warm-tint)', padding: '0.65rem 0.85rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Tone of Voice</div>
+                  <div style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--brand-burgundy)' }}>{style_analysis.tone}</div>
+                </div>
+
+                <div style={{ background: 'var(--bg-warm-tint)', padding: '0.65rem 0.85rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Emotional Temp</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.84rem', color: 'var(--text-primary)' }}>{style_analysis.emotional_temperature}</div>
+                </div>
+
+                <div style={{ background: 'var(--bg-warm-tint)', padding: '0.65rem 0.85rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Directness Level</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.84rem', color: 'var(--text-primary)' }}>{style_analysis.directness}</div>
+                </div>
+
+                <div style={{ background: 'var(--bg-warm-tint)', padding: '0.65rem 0.85rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Formality Register</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.84rem', color: 'var(--text-primary)' }}>{style_analysis.formality}</div>
+                </div>
+              </div>
+
+              {/* Surface Meaning vs Hidden Subtext Comparative Split */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '1rem',
+                marginBottom: '1.25rem'
+              }}>
+                <div style={{
+                  background: '#fcfbf9',
+                  border: '1px solid var(--border-medium)',
+                  borderLeft: '4px solid var(--text-muted)',
+                  padding: '0.9rem 1.1rem',
+                  borderRadius: '4px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                    <FileText size={13} />
+                    <span>SURFACE MEANING (LITERAL ASSERTION)</span>
+                  </div>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                    {style_analysis.surface_meaning}
+                  </p>
+                </div>
+
+                <div style={{
+                  background: 'var(--brand-burgundy-subtle)',
+                  border: '1px solid var(--brand-burgundy-border)',
+                  borderLeft: '4px solid var(--brand-burgundy)',
+                  padding: '0.9rem 1.1rem',
+                  borderRadius: '4px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 700, color: 'var(--brand-burgundy)' }}>
+                    <MessageSquare size={13} />
+                    <span>HIDDEN SUBTEXT & PSYCHOLOGICAL LEVERAGE</span>
+                  </div>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.5, fontWeight: 500 }}>
+                    {style_analysis.hidden_subtext}
+                  </p>
+                </div>
+              </div>
+
+              {/* Rhetorical Devices & Interpersonal Dynamic */}
+              <div style={{ background: '#faf9f5', border: '1px solid var(--border-light)', borderRadius: '4px', padding: '0.9rem 1.1rem', marginBottom: '1.25rem' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.4rem', fontWeight: 700 }}>
+                  Interpersonal Power Dynamic
+                </div>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-primary)', marginBottom: '0.75rem', lineHeight: 1.45 }}>
+                  {style_analysis.power_dynamic}
+                </div>
+
+                {style_analysis.rhetorical_devices?.length > 0 && (
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                      Rhetorical & Psychological Devices Detected:
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      {style_analysis.rhetorical_devices.map((device, i) => (
+                        <span key={i} style={{
+                          fontFamily: 'var(--font-mono)',
+                          fontSize: '0.72rem',
+                          background: '#ffffff',
+                          border: '1px solid var(--border-medium)',
+                          padding: '0.2rem 0.55rem',
+                          borderRadius: '3px',
+                          color: 'var(--brand-burgundy)',
+                          fontWeight: 600
+                        }}>
+                          {device}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Actionable Disarming Counter-Strategy */}
+              {style_analysis.recommended_response && (
+                <div style={{
+                  background: 'var(--cat-normal-bg)',
+                  border: '1px solid var(--cat-normal-border)',
+                  borderLeft: '4px solid var(--cat-normal-text)',
+                  padding: '0.9rem 1.1rem',
+                  borderRadius: '4px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 700, color: 'var(--cat-normal-text)' }}>
+                    <ShieldCheck size={14} />
+                    <span>RECOMMENDED STRATEGY TO DISARM OR RESPOND</span>
+                  </div>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--cat-normal-text)', lineHeight: 1.5, fontWeight: 500 }}>
+                    {style_analysis.recommended_response}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Qualitative Rationale */}
           <div>
             <div className="section-label-bar">

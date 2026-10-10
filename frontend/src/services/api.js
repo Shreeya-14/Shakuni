@@ -3,7 +3,7 @@
  * Interacts with FastAPI backend endpoints.
  */
 
-const API_BASE_URL = 'https://shakuni.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 /**
  * Handle HTTP response and parse JSON or generate user-friendly error.
@@ -44,14 +44,22 @@ export async function checkHealth() {
 
 /**
  * Submit text for manipulation and strategic deception pattern analysis.
+ * Supports deep linguistic engine options (Gemini, OpenAI, Groq, Ollama, local).
  */
-export async function analyzeText(text) {
+export async function analyzeText(text, options = {}) {
   if (!text || !text.trim()) {
     throw new Error('Please enter text to analyze.');
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
+  const payload = {
+    text,
+    engine: options.engine || 'hybrid',
+    api_key: options.apiKey || null,
+    model_name: options.modelName || null
+  };
 
   try {
     const res = await fetch(`${API_BASE_URL}/analyze`, {
@@ -60,7 +68,7 @@ export async function analyzeText(text) {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify(payload),
       signal: controller.signal
     });
     return await handleResponse(res);

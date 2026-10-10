@@ -1,12 +1,15 @@
 """Pydantic schemas for Shakuni API requests and responses."""
 
-from typing import Dict, List
+from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, field_validator
 
 
 class AnalysisRequest(BaseModel):
     """Payload for analyzing a single message."""
     text: str = Field(..., description="The message or statement to analyze for manipulation patterns.")
+    engine: Optional[str] = Field("hybrid", description="Reasoning engine: 'hybrid', 'gemini', 'openai', 'groq', 'ollama', or 'local'")
+    api_key: Optional[str] = Field(None, description="Optional user-provided API key for Gemini / OpenAI / Groq")
+    model_name: Optional[str] = Field(None, description="Optional specific model identifier")
 
     @field_validator("text")
     def text_must_not_be_blank(cls, v: str) -> str:
@@ -20,6 +23,9 @@ class AnalysisRequest(BaseModel):
 class BatchAnalysisRequest(BaseModel):
     """Payload for analyzing multiple messages in a single batch."""
     texts: List[str] = Field(..., min_length=1, max_length=50, description="List of messages to analyze (1-50 items).")
+    engine: Optional[str] = Field("hybrid", description="Reasoning engine: 'hybrid', 'gemini', 'openai', 'groq', 'ollama', or 'local'")
+    api_key: Optional[str] = Field(None, description="Optional user-provided API key")
+    model_name: Optional[str] = Field(None, description="Optional specific model identifier")
 
     @field_validator("texts")
     def validate_texts(cls, v: List[str]) -> List[str]:
@@ -41,6 +47,20 @@ class DetectedIndicatorSchema(BaseModel):
     description: str = Field(..., description="Explanation of rhetorical role")
 
 
+class LinguisticStyleSchema(BaseModel):
+    """Deep style, tone, and discourse analysis."""
+    tone: str = Field(..., description="Dominant speaking/writing tone")
+    emotional_temperature: str = Field(..., description="Cold, heated, calm, or feigned neutrality")
+    directness: str = Field(..., description="Overt, covert, or passive-aggressive")
+    formality: str = Field(..., description="Formality register")
+    surface_meaning: str = Field(..., description="Literal asserted meaning")
+    hidden_subtext: str = Field(..., description="Psychologically implied subtext and leverage")
+    rhetorical_devices: List[str] = Field(default_factory=list, description="Detected rhetorical/manipulative devices")
+    power_dynamic: str = Field(..., description="Interpersonal power stance")
+    recommended_response: str = Field(..., description="Actionable disarming counter-response")
+    model_provider: str = Field(..., description="AI model engine that produced the analysis")
+
+
 class AnalysisResponse(BaseModel):
     """Complete analysis result schema."""
     text: str = Field(..., description="The analyzed input text")
@@ -51,6 +71,7 @@ class AnalysisResponse(BaseModel):
     explanation: str = Field(..., description="Human-readable rationale and interpretation")
     indicators: List[DetectedIndicatorSchema] = Field(default_factory=list, description="List of detected linguistic indicators")
     probabilities: Dict[str, float] = Field(..., description="Posterior probability distribution over all 7 categories")
+    style_analysis: Optional[LinguisticStyleSchema] = Field(None, description="Deep speaking and writing style discourse breakdown")
 
 
 class BatchAnalysisResponse(BaseModel):

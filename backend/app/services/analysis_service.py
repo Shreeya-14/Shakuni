@@ -1,12 +1,13 @@
 """Analysis service integrating AI Engine with backend API endpoints."""
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from ai_engine.analyzer import get_analyzer, AnalysisResult
 from ai_engine.classifier.categories import get_all_categories, CategoryDefinition
 from backend.app.schemas.analysis import (
     AnalysisResponse,
     BatchAnalysisResponse,
     DetectedIndicatorSchema,
+    LinguisticStyleSchema,
     CategoryDetailSchema,
     CategoriesResponse
 )
@@ -18,9 +19,35 @@ class AnalysisService:
     def __init__(self):
         self.analyzer = get_analyzer()
 
-    def analyze_single(self, text: str) -> AnalysisResponse:
+    def analyze_single(
+        self,
+        text: str,
+        engine: Optional[str] = None,
+        api_key: Optional[str] = None,
+        model_name: Optional[str] = None
+    ) -> AnalysisResponse:
         """Run manipulation and deception pattern analysis on a single text."""
-        result: AnalysisResult = self.analyzer.analyze(text)
+        result: AnalysisResult = self.analyzer.analyze(
+            text=text,
+            engine=engine,
+            api_key=api_key,
+            model_name=model_name
+        )
+
+        style_schema = None
+        if result.style_analysis:
+            style_schema = LinguisticStyleSchema(
+                tone=result.style_analysis.tone,
+                emotional_temperature=result.style_analysis.emotional_temperature,
+                directness=result.style_analysis.directness,
+                formality=result.style_analysis.formality,
+                surface_meaning=result.style_analysis.surface_meaning,
+                hidden_subtext=result.style_analysis.hidden_subtext,
+                rhetorical_devices=result.style_analysis.rhetorical_devices,
+                power_dynamic=result.style_analysis.power_dynamic,
+                recommended_response=result.style_analysis.recommended_response,
+                model_provider=result.style_analysis.model_provider
+            )
         
         return AnalysisResponse(
             text=result.text,
@@ -38,33 +65,61 @@ class AnalysisService:
                 )
                 for ind in result.indicators
             ],
-            probabilities=result.probabilities
+            probabilities=result.probabilities,
+            style_analysis=style_schema
         )
 
-    def analyze_batch(self, texts: List[str]) -> BatchAnalysisResponse:
+    def analyze_batch(
+        self,
+        texts: List[str],
+        engine: Optional[str] = None,
+        api_key: Optional[str] = None,
+        model_name: Optional[str] = None
+    ) -> BatchAnalysisResponse:
         """Run batch analysis over multiple texts using optimized batched inference."""
-        raw_results: List[AnalysisResult] = self.analyzer.batch_analyze(texts)
-        results = [
-            AnalysisResponse(
-                text=r.text,
-                category=r.category,
-                risk_score=r.risk_score,
-                risk_level=r.risk_level,
-                confidence=r.confidence,
-                explanation=r.explanation,
-                indicators=[
-                    DetectedIndicatorSchema(
-                        name=ind.name,
-                        matched_phrase=ind.matched_phrase,
-                        category_relevance=ind.category_relevance,
-                        description=ind.description
-                    )
-                    for ind in r.indicators
-                ],
-                probabilities=r.probabilities
+        raw_results: List[AnalysisResult] = self.analyzer.batch_analyze(
+            texts=texts,
+            engine=engine,
+            api_key=api_key,
+            model_name=model_name
+        )
+        results = []
+        for r in raw_results:
+            style_schema = None
+            if r.style_analysis:
+                style_schema = LinguisticStyleSchema(
+                    tone=r.style_analysis.tone,
+                    emotional_temperature=r.style_analysis.emotional_temperature,
+                    directness=r.style_analysis.directness,
+                    formality=r.style_analysis.formality,
+                    surface_meaning=r.style_analysis.surface_meaning,
+                    hidden_subtext=r.style_analysis.hidden_subtext,
+                    rhetorical_devices=r.style_analysis.rhetorical_devices,
+                    power_dynamic=r.style_analysis.power_dynamic,
+                    recommended_response=r.style_analysis.recommended_response,
+                    model_provider=r.style_analysis.model_provider
+                )
+            results.append(
+                AnalysisResponse(
+                    text=r.text,
+                    category=r.category,
+                    risk_score=r.risk_score,
+                    risk_level=r.risk_level,
+                    confidence=r.confidence,
+                    explanation=r.explanation,
+                    indicators=[
+                        DetectedIndicatorSchema(
+                            name=ind.name,
+                            matched_phrase=ind.matched_phrase,
+                            category_relevance=ind.category_relevance,
+                            description=ind.description
+                        )
+                        for ind in r.indicators
+                    ],
+                    probabilities=r.probabilities,
+                    style_analysis=style_schema
+                )
             )
-            for r in raw_results
-        ]
         return BatchAnalysisResponse(
             total_analyzed=len(results),
             results=results

@@ -12,6 +12,7 @@ from ai_engine.analysis.indicators import detect_indicators, DetectedIndicator
 from ai_engine.analysis.confidence import calculate_confidence
 from ai_engine.analysis.risk_score import calculate_risk_score
 from ai_engine.analysis.explanation import generate_explanation
+from ai_engine.analysis.linguistic_engine import LinguisticStyle, get_linguistic_engine
 
 
 class AnalysisResult(BaseModel):
@@ -24,15 +25,23 @@ class AnalysisResult(BaseModel):
     explanation: str = Field(..., description="Human-readable rationale and interpretation")
     indicators: List[DetectedIndicator] = Field(default_factory=list, description="List of detected linguistic markers")
     probabilities: Dict[str, float] = Field(..., description="Posterior probability distribution across all 7 categories")
+    style_analysis: Optional[LinguisticStyle] = Field(None, description="Deep speaking and writing style discourse breakdown")
 
 
 class ShakuniAnalyzer:
-    """Core analysis facade coordinating NLP inference and contextual reasoning."""
+    """Core analysis facade coordinating NLP inference, discourse reasoning, and contextual intelligence."""
 
     def __init__(self):
         self.classifier = get_classifier()
+        self.linguistic_engine = get_linguistic_engine()
 
-    def analyze(self, text: str) -> AnalysisResult:
+    def analyze(
+        self,
+        text: str,
+        engine: Optional[str] = None,
+        api_key: Optional[str] = None,
+        model_name: Optional[str] = None
+    ) -> AnalysisResult:
         """Perform end-to-end analysis on a single text string."""
         raw_text = text or ""
         cleaned = clean_text(raw_text)
@@ -62,6 +71,15 @@ class ShakuniAnalyzer:
             text=raw_text
         )
 
+        # 6. Deep linguistic and style discourse analysis (ChatGPT/Gemini or Local Reasoner)
+        style_analysis = self.linguistic_engine.analyze(
+            text=raw_text,
+            category=predicted_category,
+            engine=engine,
+            api_key=api_key,
+            model_name=model_name
+        )
+
         return AnalysisResult(
             text=raw_text,
             category=predicted_category,
@@ -70,10 +88,17 @@ class ShakuniAnalyzer:
             confidence=confidence,
             explanation=explanation,
             indicators=indicators,
-            probabilities=probabilities
+            probabilities=probabilities,
+            style_analysis=style_analysis
         )
 
-    def batch_analyze(self, texts: List[str]) -> List[AnalysisResult]:
+    def batch_analyze(
+        self,
+        texts: List[str],
+        engine: Optional[str] = None,
+        api_key: Optional[str] = None,
+        model_name: Optional[str] = None
+    ) -> List[AnalysisResult]:
         """Analyze a collection of text inputs using batched ML inference."""
         if not texts:
             return []
@@ -104,6 +129,13 @@ class ShakuniAnalyzer:
                 indicators=indicators,
                 text=raw_t
             )
+            style_analysis = self.linguistic_engine.analyze(
+                text=raw_t,
+                category=predicted_category,
+                engine=engine,
+                api_key=api_key,
+                model_name=model_name
+            )
             results.append(
                 AnalysisResult(
                     text=raw_t,
@@ -113,7 +145,8 @@ class ShakuniAnalyzer:
                     confidence=confidence,
                     explanation=explanation,
                     indicators=indicators,
-                    probabilities=probabilities
+                    probabilities=probabilities,
+                    style_analysis=style_analysis
                 )
             )
         return results

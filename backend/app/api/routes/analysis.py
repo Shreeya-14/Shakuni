@@ -25,7 +25,12 @@ async def analyze_text(
 ) -> AnalysisResponse:
     """Analyze a single message for manipulation patterns."""
     try:
-        return service.analyze_single(payload.text)
+        return service.analyze_single(
+            text=payload.text,
+            engine=payload.engine,
+            api_key=payload.api_key,
+            model_name=payload.model_name
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -45,7 +50,12 @@ async def batch_analyze_texts(
 ) -> BatchAnalysisResponse:
     """Analyze a batch of texts for manipulation patterns."""
     try:
-        return service.analyze_batch(payload.texts)
+        return service.analyze_batch(
+            texts=payload.texts,
+            engine=payload.engine,
+            api_key=payload.api_key,
+            model_name=payload.model_name
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
