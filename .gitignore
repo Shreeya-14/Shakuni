@@ -51,6 +51,12 @@ frontend/.env.development.local
 # Model artifacts (include lightweight pre-trained baseline binaries for deployment)
 !ai_engine/models/*.joblib
 !ai_engine/models/.gitkeep
+ai_engine/models/*/*.safetensors
+ai_engine/models/*/*.bin
 
 # Logs
 *.log
+
+# Backups
+backup_pre_upgrade/
+

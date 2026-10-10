@@ -17,7 +17,7 @@ from ai_engine.analysis.explanation import generate_explanation
 class AnalysisResult(BaseModel):
     """Structured response model for text manipulation analysis."""
     text: str = Field(..., description="The original submitted text")
-    category: str = Field(..., description="Identified manipulation pattern category")
+    category: str = Field(..., description="Identified manipulation pattern category or uncertainty outcome")
     risk_score: int = Field(..., ge=0, le=100, description="Estimated pattern intensity score (0-100)")
     risk_level: str = Field(..., description="Qualitative risk tier: Low, Moderate, or High")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Model statistical confidence (0.0-1.0)")
@@ -58,7 +58,8 @@ class ShakuniAnalyzer:
         explanation = generate_explanation(
             category=predicted_category,
             confidence=confidence,
-            indicators=indicators
+            indicators=indicators,
+            text=raw_text
         )
 
         return AnalysisResult(
@@ -73,8 +74,49 @@ class ShakuniAnalyzer:
         )
 
     def batch_analyze(self, texts: List[str]) -> List[AnalysisResult]:
-        """Analyze a collection of text inputs."""
-        return [self.analyze(t) for t in texts]
+        """Analyze a collection of text inputs using batched ML inference."""
+        if not texts:
+            return []
+
+        raw_texts = [t or "" for t in texts]
+        cleaned_texts = [clean_text(t) for t in raw_texts]
+
+        # 1. Batch extract indicators
+        all_indicators = [detect_indicators(c) for c in cleaned_texts]
+
+        # 2. Optimized batch ML prediction
+        predictions = self.classifier.batch_predict(cleaned_texts)
+
+        results = []
+        for raw_t, indicators, (predicted_category, raw_conf, probabilities) in zip(
+            raw_texts, all_indicators, predictions
+        ):
+            confidence = calculate_confidence(probabilities, predicted_category)
+            risk_score, risk_level = calculate_risk_score(
+                predicted_category=predicted_category,
+                confidence=confidence,
+                probabilities=probabilities,
+                indicators=indicators
+            )
+            explanation = generate_explanation(
+                category=predicted_category,
+                confidence=confidence,
+                indicators=indicators,
+                text=raw_t
+            )
+            results.append(
+                AnalysisResult(
+                    text=raw_t,
+                    category=predicted_category,
+                    risk_score=risk_score,
+                    risk_level=risk_level,
+                    confidence=confidence,
+                    explanation=explanation,
+                    indicators=indicators,
+                    probabilities=probabilities
+                )
+            )
+        return results
 
 
 # Module-level helper

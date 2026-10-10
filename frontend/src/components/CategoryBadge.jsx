@@ -16,6 +16,18 @@ const CATEGORY_MAP = {
     icon: ShieldCheck,
     label: 'Normal / Neutral'
   },
+  'No significant manipulation detected': {
+    code: 'CAT-00',
+    className: 'normal',
+    icon: ShieldCheck,
+    label: 'No Significant Manipulation'
+  },
+  'Insufficient evidence to classify': {
+    code: 'CAT-UNC',
+    className: 'normal',
+    icon: ShieldCheck,
+    label: 'Insufficient Evidence'
+  },
   'Social Pressure': {
     code: 'CAT-02',
     className: 'social',

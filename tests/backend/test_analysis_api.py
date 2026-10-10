@@ -91,3 +91,29 @@ def test_batch_analyze_contains_blank_item(client):
     }
     response = client.post("/api/batch-analyze", json=payload)
     assert response.status_code == 422
+
+
+def test_analyze_meeting_sentence_not_manipulative(client):
+    """Critical regression test: Ordinary meeting sentences must NOT be flagged as manipulation."""
+    payload = {"text": "There is a meeting tomorrow."}
+    response = client.post("/api/analyze", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data["category"] in ["Normal / No Significant Manipulation", "No significant manipulation detected"]
+    assert data["risk_score"] < 40
+    assert data["risk_level"] == "Low"
+    assert data["confidence"] >= 0.50
+
+
+def test_analyze_coercive_threat(client):
+    """Verify overt coercive threat is properly flagged as Emotional Pressure."""
+    payload = {"text": "You must agree with me, or I will make sure you regret it."}
+    response = client.post("/api/analyze", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data["category"] == "Emotional Pressure"
+    assert data["risk_score"] >= 40
+    assert data["risk_level"] in ["Moderate", "High"]
+

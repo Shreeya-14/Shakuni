@@ -154,22 +154,78 @@ MANIPULATION_CATEGORIES: Dict[str, CategoryDefinition] = {
     )
 }
 
+# The 7 canonical supervised learning categories
 CATEGORY_NAMES: List[str] = list(MANIPULATION_CATEGORIES.keys())
+NORMAL_CATEGORY_NAME: str = "Normal / No Significant Manipulation"
+
+# Evidence-based uncertainty and calibrated non-manipulation outcomes
+INSUFFICIENT_EVIDENCE: str = "Insufficient evidence to classify"
+NO_MANIPULATION_DETECTED: str = "No significant manipulation detected"
+UNCERTAINTY_OUTCOMES: List[str] = [INSUFFICIENT_EVIDENCE, NO_MANIPULATION_DETECTED]
+
+# Extended category definitions for uncertainty and non-manipulation outcomes
+AUXILIARY_OUTCOMES: Dict[str, CategoryDefinition] = {
+    NO_MANIPULATION_DETECTED: CategoryDefinition(
+        id="no_manipulation",
+        name=NO_MANIPULATION_DETECTED,
+        description="Calibrated evaluation indicates no significant presence of manipulative, coercive, or deceptive patterns.",
+        examples=[
+            "There is a meeting tomorrow.",
+            "The report must be submitted by Friday.",
+            "I strongly recommend this option because it reduces costs."
+        ],
+        typical_linguistic_indicators=[
+            "objective tone",
+            "routine workplace coordination",
+            "evidence-based rationale"
+        ],
+        risk_interpretation="Minimal risk. Text represents ordinary informational or professional discourse.",
+        base_risk_weight=5.0
+    ),
+    INSUFFICIENT_EVIDENCE: CategoryDefinition(
+        id="insufficient_evidence",
+        name=INSUFFICIENT_EVIDENCE,
+        description="Observable linguistic evidence is ambiguous or weak; model posterior confidence does not meet the statistical threshold to reliably attribute a manipulation category.",
+        examples=[
+            "We should discuss this further when you have a moment.",
+            "That was an interesting point raised earlier."
+        ],
+        typical_linguistic_indicators=[
+            "diffuse lexical markers",
+            "ambiguous context",
+            "low statistical margin"
+        ],
+        risk_interpretation="Uncertain. The statement lacks conclusive textual indicators to warrant an elevated risk assessment.",
+        base_risk_weight=10.0
+    )
+}
+
+ALL_CATEGORIES_MAP: Dict[str, CategoryDefinition] = {
+    **MANIPULATION_CATEGORIES,
+    **AUXILIARY_OUTCOMES
+}
+ALL_OUTCOME_NAMES: List[str] = CATEGORY_NAMES + UNCERTAINTY_OUTCOMES
 
 
 def get_all_categories() -> List[CategoryDefinition]:
-    """Return all defined manipulation categories."""
+    """Return the 7 primary manipulation categories for reference and documentation."""
     return list(MANIPULATION_CATEGORIES.values())
 
 
+def get_all_outcomes() -> List[CategoryDefinition]:
+    """Return all possible analysis outcomes including uncertainty categories."""
+    return list(ALL_CATEGORIES_MAP.values())
+
+
 def get_category_by_name(name: str) -> Optional[CategoryDefinition]:
-    """Retrieve category definition by canonical name."""
-    return MANIPULATION_CATEGORIES.get(name)
+    """Retrieve category definition by canonical or auxiliary outcome name."""
+    return ALL_CATEGORIES_MAP.get(name)
 
 
 def get_category_by_id(cat_id: str) -> Optional[CategoryDefinition]:
     """Retrieve category definition by machine-readable ID."""
-    for cat in MANIPULATION_CATEGORIES.values():
+    for cat in ALL_CATEGORIES_MAP.values():
         if cat.id == cat_id:
             return cat
     return None
+

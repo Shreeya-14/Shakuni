@@ -1,127 +1,467 @@
 {
-  "accuracy": 0.9143,
-  "macro_precision": 0.9238,
-  "macro_recall": 0.9143,
-  "macro_f1": 0.9137,
-  "weighted_precision": 0.9238,
-  "weighted_recall": 0.9143,
-  "weighted_f1": 0.9137,
-  "per_category": {
-    "Normal / No Significant Manipulation": {
-      "precision": 0.8333,
-      "recall": 1.0,
-      "f1_score": 0.9091,
-      "support": 5
+  "evaluation_timestamp": "2026-10-09T15:28:32.956732+00:00",
+  "test_dataset": "C:\\Users\\ishaa\\Downloads\\Shakuni\\evaluation\\test_cases\\evaluation_cases.csv",
+  "total_test_samples": 80,
+  "baseline_tfidf": {
+    "model_type": "tfidf",
+    "metrics": {
+      "accuracy": 0.375,
+      "macro_precision": 0.6077,
+      "macro_recall": 0.3169,
+      "macro_f1": 0.2982,
+      "weighted_precision": 0.5914,
+      "weighted_recall": 0.375,
+      "weighted_f1": 0.3102,
+      "per_category": {
+        "Normal / No Significant Manipulation": {
+          "precision": 0.2537,
+          "recall": 1.0,
+          "f1_score": 0.4048,
+          "support": 17
+        },
+        "Social Pressure": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 10
+        },
+        "Emotional Pressure": {
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1_score": 0.5714,
+          "support": 10
+        },
+        "Misleading Framing": {
+          "precision": 1.0,
+          "recall": 0.6364,
+          "f1_score": 0.7778,
+          "support": 11
+        },
+        "Selective Information": {
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1_score": 0.1667,
+          "support": 11
+        },
+        "Information Withholding": {
+          "precision": 1.0,
+          "recall": 0.0909,
+          "f1_score": 0.1667,
+          "support": 11
+        },
+        "Deceptive Persuasion": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 10
+        }
+      },
+      "confusion_matrix": [
+        [
+          17,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0,
+          7,
+          0,
+          0,
+          0
+        ],
+        [
+          10,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          10,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "labels": [
+        "Normal / No Significant Manipulation",
+        "Social Pressure",
+        "Emotional Pressure",
+        "Misleading Framing",
+        "Selective Information",
+        "Information Withholding",
+        "Deceptive Persuasion"
+      ]
     },
-    "Social Pressure": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1_score": 1.0,
-      "support": 5
-    },
-    "Emotional Pressure": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1_score": 1.0,
-      "support": 5
-    },
-    "Misleading Framing": {
-      "precision": 1.0,
-      "recall": 0.8,
-      "f1_score": 0.8889,
-      "support": 5
-    },
-    "Selective Information": {
-      "precision": 0.8333,
-      "recall": 1.0,
-      "f1_score": 0.9091,
-      "support": 5
-    },
-    "Information Withholding": {
-      "precision": 0.8,
-      "recall": 0.8,
-      "f1_score": 0.8,
-      "support": 5
-    },
-    "Deceptive Persuasion": {
-      "precision": 1.0,
-      "recall": 0.8,
-      "f1_score": 0.8889,
-      "support": 5
-    }
+    "latency_per_sample_ms": 0.21,
+    "neutral_total": 17,
+    "neutral_fp_count": 0,
+    "neutral_fp_rate": 0.0,
+    "neutral_false_positives": [],
+    "regression_results": [
+      {
+        "text": "There is a meeting tomorrow.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.3666,
+        "passed": true
+      },
+      {
+        "text": "The meeting is scheduled for tomorrow.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.6464,
+        "passed": true
+      },
+      {
+        "text": "Please attend the meeting at 10 AM.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.6345,
+        "passed": true
+      },
+      {
+        "text": "The report must be submitted by Friday.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.5398,
+        "passed": true
+      },
+      {
+        "text": "I am worried about the deadline.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.5847,
+        "passed": true
+      },
+      {
+        "text": "Everyone received the announcement yesterday.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.4649,
+        "passed": true
+      },
+      {
+        "text": "We need to make a decision today.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.5364,
+        "passed": true
+      },
+      {
+        "text": "If you cared about this team, you would attend the meeting.",
+        "expected": "Emotional Pressure",
+        "predicted": "Insufficient evidence to classify",
+        "confidence": 0.4872,
+        "passed": false
+      },
+      {
+        "text": "Everyone agrees with me, so you should too.",
+        "expected": "Social Pressure",
+        "predicted": "Insufficient evidence to classify",
+        "confidence": 0.5688,
+        "passed": false
+      },
+      {
+        "text": "I strongly recommend this option because it reduces costs.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.5294,
+        "passed": true
+      },
+      {
+        "text": "This plan has benefits, but it also has drawbacks.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "No significant manipulation detected",
+        "confidence": 0.7612,
+        "passed": true
+      },
+      {
+        "text": "You must agree with me, or I will make sure you regret it.",
+        "expected": "Emotional Pressure",
+        "predicted": "Emotional Pressure",
+        "confidence": 0.6169,
+        "passed": true
+      }
+    ],
+    "regression_pass_count": 10,
+    "regression_total": 12
   },
-  "confusion_matrix": [
-    [
-      5,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+  "candidate_distilbert": {
+    "model_type": "distilbert",
+    "metrics": {
+      "accuracy": 0.85,
+      "macro_precision": 0.8941,
+      "macro_recall": 0.8501,
+      "macro_f1": 0.8654,
+      "weighted_precision": 0.8722,
+      "weighted_recall": 0.85,
+      "weighted_f1": 0.8541,
+      "per_category": {
+        "Normal / No Significant Manipulation": {
+          "precision": 0.6364,
+          "recall": 0.8235,
+          "f1_score": 0.7179,
+          "support": 17
+        },
+        "Social Pressure": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1_score": 0.8235,
+          "support": 10
+        },
+        "Emotional Pressure": {
+          "precision": 1.0,
+          "recall": 0.9,
+          "f1_score": 0.9474,
+          "support": 10
+        },
+        "Misleading Framing": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 11
+        },
+        "Selective Information": {
+          "precision": 0.8333,
+          "recall": 0.9091,
+          "f1_score": 0.8696,
+          "support": 11
+        },
+        "Information Withholding": {
+          "precision": 0.9,
+          "recall": 0.8182,
+          "f1_score": 0.8571,
+          "support": 11
+        },
+        "Deceptive Persuasion": {
+          "precision": 0.8889,
+          "recall": 0.8,
+          "f1_score": 0.8421,
+          "support": 10
+        }
+      },
+      "confusion_matrix": [
+        [
+          14,
+          0,
+          0,
+          0,
+          2,
+          1,
+          0
+        ],
+        [
+          3,
+          7,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          9,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          11,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          10,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          9,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8
+        ]
+      ],
+      "labels": [
+        "Normal / No Significant Manipulation",
+        "Social Pressure",
+        "Emotional Pressure",
+        "Misleading Framing",
+        "Selective Information",
+        "Information Withholding",
+        "Deceptive Persuasion"
+      ]
+    },
+    "latency_per_sample_ms": 14.58,
+    "neutral_total": 17,
+    "neutral_fp_count": 3,
+    "neutral_fp_rate": 0.1765,
+    "neutral_false_positives": [
+      [
+        "Our survey results indicate that sixty-four percent of participants prefer flexible remote work hours.",
+        "Selective Information",
+        0.8672
+      ],
+      [
+        "All employee travel expenses must be submitted with accompanying itemized receipts by month end.",
+        "Information Withholding",
+        0.7167
+      ],
+      [
+        "The study analyzed demographic trends across six metropolitan regions over a ten-year duration.",
+        "Selective Information",
+        0.5705
+      ]
     ],
-    [
-      0,
-      5,
-      0,
-      0,
-      0,
-      0,
-      0
+    "regression_results": [
+      {
+        "text": "There is a meeting tomorrow.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8669,
+        "passed": true
+      },
+      {
+        "text": "The meeting is scheduled for tomorrow.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8734,
+        "passed": true
+      },
+      {
+        "text": "Please attend the meeting at 10 AM.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8679,
+        "passed": true
+      },
+      {
+        "text": "The report must be submitted by Friday.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8716,
+        "passed": true
+      },
+      {
+        "text": "I am worried about the deadline.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8551,
+        "passed": true
+      },
+      {
+        "text": "Everyone received the announcement yesterday.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8501,
+        "passed": true
+      },
+      {
+        "text": "We need to make a decision today.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8482,
+        "passed": true
+      },
+      {
+        "text": "If you cared about this team, you would attend the meeting.",
+        "expected": "Emotional Pressure",
+        "predicted": "Emotional Pressure",
+        "confidence": 0.7585,
+        "passed": true
+      },
+      {
+        "text": "Everyone agrees with me, so you should too.",
+        "expected": "Social Pressure",
+        "predicted": "Social Pressure",
+        "confidence": 0.8631,
+        "passed": true
+      },
+      {
+        "text": "I strongly recommend this option because it reduces costs.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "Normal / No Significant Manipulation",
+        "confidence": 0.8222,
+        "passed": true
+      },
+      {
+        "text": "This plan has benefits, but it also has drawbacks.",
+        "expected": "Normal / No Significant Manipulation",
+        "predicted": "No significant manipulation detected",
+        "confidence": 0.4351,
+        "passed": true
+      },
+      {
+        "text": "You must agree with me, or I will make sure you regret it.",
+        "expected": "Emotional Pressure",
+        "predicted": "Emotional Pressure",
+        "confidence": 0.936,
+        "passed": true
+      }
     ],
-    [
-      0,
-      0,
-      5,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      4,
-      0,
-      1,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      5,
-      0,
-      0
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      4,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      1,
-      0,
-      4
-    ]
-  ],
-  "labels": [
-    "Normal / No Significant Manipulation",
-    "Social Pressure",
-    "Emotional Pressure",
-    "Misleading Framing",
-    "Selective Information",
-    "Information Withholding",
-    "Deceptive Persuasion"
-  ]
+    "regression_pass_count": 12,
+    "regression_total": 12
+  }
 }

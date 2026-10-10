@@ -3,7 +3,7 @@
  * Interacts with FastAPI backend endpoints.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = 'https://shakuni.onrender.com/api';
 
 /**
  * Handle HTTP response and parse JSON or generate user-friendly error.

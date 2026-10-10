@@ -1,7 +1,7 @@
 """Tests for the ShakuniAnalyzer unified facade."""
 
 from ai_engine.analyzer import ShakuniAnalyzer, get_analyzer
-from ai_engine.classifier.categories import CATEGORY_NAMES
+from ai_engine.classifier.categories import CATEGORY_NAMES, ALL_OUTCOME_NAMES
 
 
 def test_analyzer_singleton():
@@ -16,7 +16,7 @@ def test_analyze_output_contract():
     result = analyzer.analyze(text)
     
     assert result.text == text
-    assert result.category in CATEGORY_NAMES
+    assert result.category in ALL_OUTCOME_NAMES
     assert 0 <= result.risk_score <= 100
     assert result.risk_level in ["Low", "Moderate", "High"]
     assert 0.0 <= result.confidence <= 1.0
@@ -38,4 +38,4 @@ def test_analyze_batch():
     results = analyzer.batch_analyze(texts)
     assert len(results) == 2
     for r in results:
-        assert r.category in CATEGORY_NAMES
+        assert r.category in ALL_OUTCOME_NAMES

@@ -42,8 +42,29 @@ class AnalysisService:
         )
 
     def analyze_batch(self, texts: List[str]) -> BatchAnalysisResponse:
-        """Run batch analysis over multiple texts."""
-        results = [self.analyze_single(t) for t in texts]
+        """Run batch analysis over multiple texts using optimized batched inference."""
+        raw_results: List[AnalysisResult] = self.analyzer.batch_analyze(texts)
+        results = [
+            AnalysisResponse(
+                text=r.text,
+                category=r.category,
+                risk_score=r.risk_score,
+                risk_level=r.risk_level,
+                confidence=r.confidence,
+                explanation=r.explanation,
+                indicators=[
+                    DetectedIndicatorSchema(
+                        name=ind.name,
+                        matched_phrase=ind.matched_phrase,
+                        category_relevance=ind.category_relevance,
+                        description=ind.description
+                    )
+                    for ind in r.indicators
+                ],
+                probabilities=r.probabilities
+            )
+            for r in raw_results
+        ]
         return BatchAnalysisResponse(
             total_analyzed=len(results),
             results=results

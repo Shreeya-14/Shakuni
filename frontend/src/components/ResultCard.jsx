@@ -34,7 +34,7 @@ export default function ResultCard({ result }) {
             CLASSIFICATION BRIEF
           </div>
           <div>
-            TF-IDF + LOGISTIC REGRESSION &bull; CALIBRATED SOFTMAX
+            CONTEXTUAL LANGUAGE MODEL &bull; CALIBRATED EVIDENCE SOFTMAX
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export default function ResultCard({ result }) {
               <span className="confidence-big-pct">{confidencePct}%</span>
             </div>
             <p className="confidence-description">
-              Estimated posterior probability mass assigned to the primary category under multinomial logistic softmax over 4,595 lexical features.
+              Estimated posterior probability mass assigned to the identified pattern under the fine-tuned contextual model with evidence-based uncertainty calibration.
             </p>
           </div>
         </div>
